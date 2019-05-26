@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User</title>
+
+    <!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<style type="text/css">
+	.bg-ino {
+}
+    </style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<script>
+	$(document).ready(function()
+	{
+	  $("#submitt").click(function(){
+		 var a = document.getElementById("redd").value;
+		 var b = document.getElementById("bluee").value;
+		 var c = document.getElementById("greenn").value;
+		 var d = document.getElementById("yelloww").value;
+		 var sum = parseInt(a)+parseInt(b)+parseInt(c)+parseInt(d);
+		  if(sum<=10)
+		  {
+			$.post("https://industrial48.herokuapp.com/order",
+			{
+			"red": parseInt(a),
+			"blue": parseInt(b),
+			"green":parseInt(c),
+			"orange": parseInt(d)
+			},function(data,status){
+			 alert("Status: " + status);
+			 $.getJSON('https://industrial48.herokuapp.com/showrecentstock', function(emp) { 
+			document.getElementById('redb').innerHTML = emp.red;
+			document.getElementById('blueb').innerHTML = emp.blue;
+			document.getElementById('greenb').innerHTML = emp.green;
+			document.getElementById('yellowb').innerHTML = emp.orange;
+			$.getJSON('http://industrial48.herokuapp.com/orderstatuses', function(emp2) { 
+			document.getElementById('prob').innerHTML = emp2.pending;
+			});
+			}); 
+			}); 			 
+		  }
+		  else
+		  {
+			 alert("Order must less than 10 SKUs");  
+		  }
+		  
+		  document.getElementById('redd').value = 0;
+		  document.getElementById('bluee').value = 0;
+		  document.getElementById('greenn').value = 0;
+		  document.getElementById('yelloww').value = 0;
+	  }
+	);
+	});
+	$(document).ready(function()
+	{
+	  $("#clearr").click(function(){
+		  document.getElementById('redd').value = 0;
+		  document.getElementById('bluee').value = 0;
+		  document.getElementById('greenn').value = 0;
+		  document.getElementById('yelloww').value = 0;
+	  }
+	);
+	});
+</script>
+</head>
+  <body class="bg-secondary" style="padding-top: 70px">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark"> <a class="navbar-brand" href="#">Smart Factory</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"> <a class="nav-link" href="home.html">Home</a></li>
+        <li class="nav-item active table-active"> <a class="nav-link" href="user.html">User</a></li>
+        <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manager</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown1"> 
+				<a class="dropdown-item" href="stock.html">Stock</a>
+				<a class="dropdown-item" href="sales2.html">Sales</a>              
+				<a class="dropdown-item" href="per2.html">Performance</a>
+		  </div>
+          </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+	<div class="pt-5 bg-secondary"></div>
+<div class="pt-5 bg-secondary"></div>
+<div class="container-fluid">
+  <div class="row text-center">
+    <div class="col-xl-4"><img src="image/065-trolley.png" width="400" height="350" alt=""/></div>
+    <div class="offset-xl-0 col-xl-7">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xl-3"></div>
+          <div class="col-xl-3"></div>
+          <div class="col-xl-4"><span class="d-block p-2 bg-dark text-light my-2 text-center" >Pending order</span></div>
+          <div class="col-xl-2"><span class="d-lg-block p-2 bg-dark text-light my-2 text-center" id="prob">order</span></div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4"><span class="d-block p-2 bg-danger text-white my-2 text-center" id="redb">red</span></div>
+          <div class="offset-xl-0 col-xl-8">
+            <div class="input-group input-group-lg">
+              <div class="input-group-prepend my-1"><span class="input-group-text">RED</span></div>
+              <input type="number" class="form-control my-1" id="redd" placeholder="input order">
+              <div class="input-group-append"> <span class="input-group-text my-1">piece</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4"><span class="d-block p-2 bg-primary text-white my-2 text-center" id="blueb">blue</span></div>
+          <div class="col-xl-8">
+            <div class="input-group input-group-lg">
+              <div class="input-group-prepend my-1"><span class="input-group-text">BLUE</span></div>
+              <input type="number" class="form-control my-1" id="bluee" placeholder="input order">
+              <div class="input-group-append"> <span class="input-group-text my-1">piece</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4"><span class="d-block p-2 bg-success text-white my-2 text-center" id="greenb">green</span></div>
+          <div class="col-xl-8">
+            <div class="input-group input-group-lg">
+              <div class="input-group-prepend my-1"><span class="input-group-text">GREEN</span></div>
+              <input type="number" class="form-control my-1" id="greenn" placeholder="input order">
+              <div class="input-group-append"> <span class="input-group-text my-1">piece</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xl-4"><span class="d-block p-2 bg-warning text-white my-2 text-center" id="yellowb">yellow</span></div>
+          <div class="col-xl-8">
+            <div class="input-group input-group-lg">
+              <div class="input-group-prepend my-1"><span class="input-group-text">YELLOW</span></div>
+              <input type="number" class="form-control my-1" id="yelloww" placeholder="input order">
+              <div class="input-group-append"> <span class="input-group-text my-1">piece</span></div>
+            </div>
+          </div>
+        </div>
+<div class="row">
+          <div class="text-center offset-xl-0 col-xl-6">
+            <button type="button" class="btn-lg btn-block btn-danger my-1" data-toggle="modal" data-target="#delete">Clear</button>
+            <div class="modal fade" id="delete">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Clear</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                  </div>
+                  <div class="modal-body">Clear order</div>
+                  <div class="modal-footer">
+                
+                    <button type="button" class="btn btn-danger" id="clearr" data-dismiss="modal">clear</button>
+                
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center offset-xl-0 col-xl-6">
+            <button type="button" class="btn-block btn-lg btn-sucress btn-success my-1" data-toggle="modal" data-target="#submit">Submit</button>
+            <div class="modal fade" id="submit">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Submit order</h4>
+                    <button type="button" class="close" data-dismiss="modal">×</button>
+                  </div>
+                  <div class="modal-body">Submit order</div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="submitt" data-dismiss="modal">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+	document.getElementById("redd").defaultValue = 0;
+	document.getElementById("bluee").defaultValue = 0;
+	document.getElementById("greenn").defaultValue = 0;
+	document.getElementById("yelloww").defaultValue = 0;
+		$.getJSON('https://industrial48.herokuapp.com/showrecentstock', function(emp) { 
+			document.getElementById('redb').innerHTML = emp.red;
+			document.getElementById('blueb').innerHTML = emp.blue;
+			document.getElementById('greenb').innerHTML = emp.green;
+			document.getElementById('yellowb').innerHTML = emp.orange;
+		});
+		$.getJSON('http://industrial48.herokuapp.com/orderstatuses', function(emp2) { 
+			document.getElementById('prob').innerHTML = emp2.pending;
+		});
+	  </script>
+<script src="js/jquery-3.2.1.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.js"></script>
+</body>
+</html>

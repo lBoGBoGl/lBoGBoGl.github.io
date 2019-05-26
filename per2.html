@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>performance</title>
+    <link href="css/bootstrap-4.0.0.css" rel="stylesheet" type="text/css">
+  <script src="js/jquery-3.2.1.min.js"></script>
+  <script src="js/Chart.js"></script>
+  </head>
+  <body style="padding-top: 70px">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark"> <a class="navbar-brand" href="#">Smart Factory</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent1">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item"> <a class="nav-link" href="home.html">Home <span class="sr-only">(current)</span></a></li>
+        <li class="nav-item"> <a class="nav-link" href="user.html">User</a></li>
+        <li class="nav-item dropdown active table-active"> <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Manager </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown1"> 
+			  <a class="dropdown-item" href="stock.html">Stock</a> 
+			  <a class="dropdown-item" href="sales2.html">Sales</a> 
+			  <a class="dropdown-item" href="per2.html">Performance</a> </div>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </nav>
+  <canvas id="pie-chart" width="500" height="200"></canvas>
+	  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap-4.0.0.js"></script>
+<script>
+$.getJSON('http://industrial48.herokuapp.com/orderstatuses', function(emp2) { 
+	new Chart(document.getElementById("pie-chart"), {
+    type: 'pie',
+    data: {
+      labels: ["Success","Failed","Pending","Queuing","Processing"],
+      datasets: [{
+        label: "Performance",
+        backgroundColor: ["#2ECC71","#E74C3C","#3498DB","#F4D03F","#8E44AD"],
+        data: [emp2.success,emp2.failed,emp2.pending,emp2.queuing,emp2.processing]
+      }]
+    },
+    options: {
+      title: {
+        display: false,
+        text: 'Performance'
+      }
+    }
+});
+	});
+
+	  </script>
+</body>
+</html>
